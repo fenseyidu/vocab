@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VocabSmith</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;700&display=swap');
+      
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+
+      .font-serif-sc {
+        font-family: 'Noto Serif SC', serif;
+      }
+
+      /* Print Specific Styles */
+      @media print {
+        @page {
+          margin: 2cm;
+          size: A4;
+        }
+        
+        body {
+          background: white;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+
+        .print-only {
+          display: block !important;
+        }
+
+        #root {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .page-break-inside-avoid {
+          page-break-inside: avoid;
+        }
+      }
+
+      .print-only {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-slate-800">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

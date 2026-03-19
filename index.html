@@ -28,63 +28,66 @@
       /* Print Specific Styles */
       @media print {
         @page {
-          margin: 1cm;
+          margin: 0.5cm;
           size: A4;
         }
 
         html, body {
-          height: auto;
-          overflow: visible;
+          height: auto !important;
+          overflow: visible !important;
         }
 
         body {
-          background: white;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
+          background: white !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
         }
 
-        .no-print {
+        #root {
+          height: auto !important;
+        }
+
+        .no-print,
+        nav,
+        header,
+        footer {
           display: none !important;
         }
 
-        .print-only {
-          display: block !important;
-        }
-
+        .print-only,
         #print-layout {
           display: block !important;
+          visibility: visible !important;
+          position: static !important;
         }
 
         #print-layout > div {
           page-break-after: always;
-          page-break-inside: avoid;
+          min-height: 95vh;
         }
 
         #print-layout > div:last-child {
           page-break-after: auto;
         }
 
-        #preview-table {
+        #preview-table,
+        .bg-white.rounded-xl {
           display: none !important;
         }
 
         #print-layout table {
-          font-size: 11px;
+          font-size: 10px;
+          width: 100%;
         }
 
         #print-layout th,
         #print-layout td {
-          padding: 4px 2px !important;
+          padding: 3px 2px !important;
+          height: auto !important;
         }
 
-        .page-break-inside-avoid {
-          page-break-inside: avoid;
-          -webkit-page-break-inside: avoid;
-        }
-
-        tr {
-          page-break-inside: avoid;
-          -webkit-page-break-inside: avoid;
+        #print-layout tbody tr {
+          page-break-inside: avoid !important;
         }
       }
 

@@ -123,20 +123,33 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
+    // Force browser to show print layout
     const printLayout = document.getElementById('print-layout');
     const previewTable = document.getElementById('preview-table');
 
-    // Show print layout, hide preview table
-    if (printLayout) printLayout.style.display = 'block';
-    if (previewTable) previewTable.style.display = 'none';
+    if (printLayout) {
+      printLayout.style.display = 'block';
+    }
+    if (previewTable) {
+      previewTable.style.display = 'none';
+    }
 
-    window.print();
+    // Use requestAnimationFrame to ensure styles are applied before print
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.print();
+      });
+    });
 
-    // Restore after print
-    setTimeout(() => {
+    // Restore after print (this will run after print dialog closes)
+    const restore = () => {
       if (printLayout) printLayout.style.display = 'none';
       if (previewTable) previewTable.style.display = '';
-    }, 100);
+    };
+
+    // Try both approaches to restore
+    setTimeout(restore, 500);
+    window.addEventListener('afterprint', restore, { once: true });
   };
 
   const handleExportPDF = async () => {

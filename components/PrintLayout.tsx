@@ -5,7 +5,7 @@ interface PrintLayoutProps {
   list: WordList;
 }
 
-const WORDS_PER_PAGE = 50;
+const WORDS_PER_PAGE = 29;
 
 const TableHeader: React.FC = () => (
   <thead>
@@ -39,7 +39,7 @@ const TableRow: React.FC<{ word: WordPair; index: number }> = ({ word, index }) 
     </td>
 
     {/* Dictation Column */}
-    <td className="border border-black p-1 align-middle relative h-8">
+    <td className="border border-black p-0.5 align-middle relative h-7">
       <span className="absolute top-1 left-1 text-xs font-mono text-gray-500">{index + 1}.</span>
     </td>
   </tr>
@@ -91,7 +91,7 @@ export const PrintLayout: React.FC<PrintLayoutProps> = ({ list }) => {
                       <td className="border border-black p-1 align-middle text-black">&nbsp;</td>
                       <td className="border border-black p-1 align-middle text-black">&nbsp;</td>
                       <td className="border border-black p-1 align-middle text-black">&nbsp;</td>
-                      <td className="border border-black p-1 align-middle h-8">&nbsp;</td>
+                      <td className="border border-black p-0.5 align-middle h-7">&nbsp;</td>
                     </tr>
                   ))}
               </tbody>

@@ -130,6 +130,9 @@ const App: React.FC = () => {
     const element = document.getElementById('print-layout');
     if (!element) return;
 
+    // Make element visible temporarily for html2pdf to capture
+    element.style.display = 'block';
+
     const opt = {
       margin: 10,
       filename: `${currentList.title || 'vocabulary-list'}.pdf`,
@@ -139,6 +142,9 @@ const App: React.FC = () => {
     };
 
     await html2pdf().set(opt).from(element).save();
+
+    // Hide it again after export
+    element.style.display = 'none';
   };
 
   const handleSave = () => {

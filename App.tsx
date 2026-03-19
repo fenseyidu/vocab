@@ -100,6 +100,11 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      alert('手机端暂不支持打印，请在电脑端打开此页面进行打印。\n\n或点击"导出PDF"保存为PDF文件。');
+      return;
+    }
     window.print();
   };
 
@@ -561,8 +566,8 @@ const App: React.FC = () => {
 
       {/* --- Save Modal (for new list only) --- */}
       {showSaveModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 no-print">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 no-print p-4">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl">
             <h3 className="text-lg font-semibold text-slate-900 mb-4">保存列表</h3>
             <input
               type="text"

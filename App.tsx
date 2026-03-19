@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Printer,
-  Download,
   Edit3,
   Trash2,
   Save,
@@ -122,11 +121,6 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
-    window.print();
-  };
-
-  const handleExportPDF = () => {
-    // Trigger print dialog with PDF option
     window.print();
   };
 
@@ -435,13 +429,6 @@ const App: React.FC = () => {
                 >
                   <Printer size={16} />
                   Print
-                </button>
-                <button
-                  onClick={handleExportPDF}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg shadow-sm hover:bg-slate-50 transition-all font-medium text-sm"
-                >
-                  <Download size={16} />
-                  Export PDF
                 </button>
               </div>
 

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Printer, 
-  Download, 
-  Edit3, 
-  Trash2, 
-  Save, 
-  BookOpen, 
+import {
+  Printer,
+  Edit3,
+  Trash2,
+  Save,
+  BookOpen,
   Plus,
   ChevronLeft
 } from 'lucide-react';
@@ -123,13 +122,6 @@ const App: React.FC = () => {
 
   const handlePrint = () => {
     window.print();
-  };
-
-  const handleExportPDF = () => {
-    // Use setTimeout to ensure it runs after any UI updates
-    setTimeout(() => {
-      window.print();
-    }, 100);
   };
 
   const handleSave = () => {
@@ -437,13 +429,6 @@ const App: React.FC = () => {
                 >
                   <Printer size={16} />
                   Print
-                </button>
-                <button
-                  onClick={handleExportPDF}
-                  className="flex sm:hidden items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-800 transition-all font-medium text-sm"
-                >
-                  <Download size={16} />
-                  导出PDF
                 </button>
               </div>
 

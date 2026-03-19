@@ -45,6 +45,7 @@
 
         #root {
           height: auto !important;
+          overflow: visible !important;
         }
 
         .no-print,
@@ -59,15 +60,36 @@
           display: block !important;
           visibility: visible !important;
           position: static !important;
+          overflow: visible !important;
+          height: auto !important;
         }
 
         #print-layout > div {
           page-break-after: always;
-          min-height: 95vh;
+          page-break-before: always;
+          break-after: page;
+          break-before: page;
+          -webkit-column-break-after: always;
+          -webkit-column-break-before: always;
+          overflow: visible !important;
+          height: auto !important;
+          min-height: 0 !important;
+          margin: 0 !important;
+          padding: 0.5cm !important;
+          box-sizing: border-box !important;
+          border: none !important;
+        }
+
+        #print-layout > div:first-child {
+          page-break-before: auto;
+          break-before: auto;
+          -webkit-column-break-before: auto;
         }
 
         #print-layout > div:last-child {
           page-break-after: auto;
+          break-after: auto;
+          -webkit-column-break-after: auto;
         }
 
         #preview-table,
@@ -88,12 +110,36 @@
 
         #print-layout tbody tr {
           page-break-inside: avoid !important;
+          break-inside: avoid;
         }
       }
 
       .print-only,
       #print-layout {
         display: none;
+      }
+
+      /* Custom print break classes */
+      .page-break-after-always {
+        page-break-after: always;
+        break-after: page;
+        -webkit-column-break-after: always;
+      }
+
+      .page-break-before-always {
+        page-break-before: always;
+        break-before: page;
+        -webkit-column-break-before: always;
+      }
+
+      .page-break-inside-avoid {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Show print layout when printing class is added */
+      #print-layout.printing {
+        display: block !important;
       }
     </style>
   </head>

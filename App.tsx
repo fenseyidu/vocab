@@ -128,22 +128,25 @@ const App: React.FC = () => {
     const previewTable = document.getElementById('preview-table');
 
     if (printLayout) {
-      printLayout.style.display = 'block';
+      // Remove inline display style to let CSS media query control it
+      printLayout.style.display = '';
+      printLayout.classList.add('printing');
     }
     if (previewTable) {
       previewTable.style.display = 'none';
     }
 
-    // Use requestAnimationFrame to ensure styles are applied before print
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.print();
-      });
-    });
+    // Use setTimeout to ensure DOM and styles are updated before print
+    setTimeout(() => {
+      window.print();
+    }, 100);
 
     // Restore after print (this will run after print dialog closes)
     const restore = () => {
-      if (printLayout) printLayout.style.display = 'none';
+      if (printLayout) {
+        printLayout.style.display = 'none';
+        printLayout.classList.remove('printing');
+      }
       if (previewTable) previewTable.style.display = '';
     };
 

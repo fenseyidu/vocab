@@ -123,7 +123,15 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    const element = document.getElementById('preview-table');
+    if (element) {
+      // Hide all other content, show only table for printing
+      element.style.display = 'block';
+      window.print();
+      element.style.display = '';
+    } else {
+      window.print();
+    }
   };
 
   const handleExportPDF = async () => {
@@ -463,7 +471,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Web Preview of the Table */}
-              <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
+              <div id="preview-table" className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead className="bg-slate-50 border-b border-slate-200">

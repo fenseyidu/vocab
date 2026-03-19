@@ -28,10 +28,10 @@
       /* Print Specific Styles */
       @media print {
         @page {
-          margin: 2cm;
+          margin: 1cm;
           size: A4;
         }
-        
+
         body {
           background: white;
         }
@@ -50,7 +50,24 @@
           padding: 0;
         }
 
+        #preview-table {
+          display: block !important;
+        }
+
+        #preview-table table {
+          font-size: 12px;
+        }
+
+        #preview-table th,
+        #preview-table td {
+          padding: 8px 6px !important;
+        }
+
         .page-break-inside-avoid {
+          page-break-inside: avoid;
+        }
+
+        tr {
           page-break-inside: avoid;
         }
       }

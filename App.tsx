@@ -126,7 +126,10 @@ const App: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    window.print();
+    // Use setTimeout to ensure it runs after any UI updates
+    setTimeout(() => {
+      window.print();
+    }, 100);
   };
 
   const handleSave = () => {

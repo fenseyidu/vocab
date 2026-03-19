@@ -44,23 +44,21 @@
           display: block !important;
         }
 
-        #root {
-          width: 100%;
-          margin: 0;
-          padding: 0;
-        }
-
-        #preview-table {
+        #print-layout {
           display: block !important;
         }
 
-        #preview-table table {
-          font-size: 12px;
+        #preview-table {
+          display: none !important;
         }
 
-        #preview-table th,
-        #preview-table td {
-          padding: 8px 6px !important;
+        #print-layout table {
+          font-size: 11px;
+        }
+
+        #print-layout th,
+        #print-layout td {
+          padding: 4px 2px !important;
         }
 
         .page-break-inside-avoid {
@@ -72,7 +70,8 @@
         }
       }
 
-      .print-only {
+      .print-only,
+      #print-layout {
         display: none;
       }
     </style>

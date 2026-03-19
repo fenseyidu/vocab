@@ -123,15 +123,20 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
-    const element = document.getElementById('preview-table');
-    if (element) {
-      // Hide all other content, show only table for printing
-      element.style.display = 'block';
-      window.print();
-      element.style.display = '';
-    } else {
-      window.print();
-    }
+    const printLayout = document.getElementById('print-layout');
+    const previewTable = document.getElementById('preview-table');
+
+    // Show print layout, hide preview table
+    if (printLayout) printLayout.style.display = 'block';
+    if (previewTable) previewTable.style.display = 'none';
+
+    window.print();
+
+    // Restore after print
+    setTimeout(() => {
+      if (printLayout) printLayout.style.display = 'none';
+      if (previewTable) previewTable.style.display = '';
+    }, 100);
   };
 
   const handleExportPDF = async () => {

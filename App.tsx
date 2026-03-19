@@ -100,10 +100,13 @@ const App: React.FC = () => {
   };
 
   const handlePrint = () => {
+    window.print();
+  };
+
+  const handleExportPDF = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
-      alert('手机端暂不支持打印，请在电脑端打开此页面进行打印。\n\n或点击"导出PDF"保存为PDF文件。');
-      return;
+      alert('请在打印弹窗中选择「存储为PDF」或「保存到文件」选项。');
     }
     window.print();
   };
@@ -410,10 +413,17 @@ const App: React.FC = () => {
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-800 transition-all font-medium text-sm hover:scale-105 active:scale-95"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-800 transition-all font-medium text-sm hover:scale-105 active:scale-95"
                 >
                   <Printer size={16} />
                   Print
+                </button>
+                <button
+                  onClick={handleExportPDF}
+                  className="flex sm:hidden items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-800 transition-all font-medium text-sm"
+                >
+                  <Download size={16} />
+                  导出PDF
                 </button>
               </div>
 

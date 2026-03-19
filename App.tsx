@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import html2pdf from 'html2pdf.js';
 import {
   Printer,
+  Download,
   Edit3,
   Trash2,
   Save,
@@ -122,6 +124,21 @@ const App: React.FC = () => {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleExportPDF = async () => {
+    const element = document.getElementById('print-layout');
+    if (!element) return;
+
+    const opt = {
+      margin: 10,
+      filename: `${currentList.title || 'vocabulary-list'}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    await html2pdf().set(opt).from(element).save();
   };
 
   const handleSave = () => {
@@ -429,6 +446,13 @@ const App: React.FC = () => {
                 >
                   <Printer size={16} />
                   Print
+                </button>
+                <button
+                  onClick={handleExportPDF}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg shadow-sm hover:bg-slate-50 transition-all font-medium text-sm"
+                >
+                  <Download size={16} />
+                  Export PDF
                 </button>
               </div>
 

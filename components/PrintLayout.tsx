@@ -60,7 +60,7 @@ export const PrintLayout: React.FC<PrintLayoutProps> = ({ list }) => {
   }
 
   return (
-    <div className="print-only">
+    <div id="print-layout" className="print-only">
       {pages.map((pageWords, pageIndex) => (
         <div
           key={pageIndex}

@@ -27,7 +27,7 @@ export const InputArea: React.FC<InputAreaProps> = ({
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-64 p-4 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono text-sm resize-none"
+          className="w-full h-64 p-4 rounded-lg border border-slate-200 focus:border-indigo-400 font-mono text-sm resize-none transition-colors"
           placeholder="Paste your list here..."
         />
       </div>

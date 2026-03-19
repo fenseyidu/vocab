@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Printer, 
   Download, 
@@ -36,8 +36,31 @@ const App: React.FC = () => {
   useEffect(() => {
     const stored = localStorage.getItem('vocab_lists');
     if (stored) {
-      setSavedLists(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+      // Remove lists with old "pages.dev" titles
+      const cleaned = parsed.filter((list: WordList) => {
+        return !(list.title && list.title.includes('pages.dev'));
+      });
+      setSavedLists(cleaned);
+      // Save cleaned data if any were removed
+      if (cleaned.length !== parsed.length) {
+        localStorage.setItem('vocab_lists', JSON.stringify(cleaned));
+      }
     }
+  }, []);
+
+  // Handle keyboard open/close to prevent page jump
+  useEffect(() => {
+    const handleFocus = () => document.body.classList.add('keyboard-open');
+    const handleBlur = () => document.body.classList.remove('keyboard-open');
+
+    document.addEventListener('focusin', handleFocus);
+    document.addEventListener('focusout', handleBlur);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocus);
+      document.removeEventListener('focusout', handleBlur);
+    };
   }, []);
 
   // Handlers
@@ -96,7 +119,6 @@ const App: React.FC = () => {
     setCurrentList(newList);
     setShowSaveModal(false);
     setViewMode(ViewMode.PREVIEW);
-    alert('保存成功！');
   };
 
   const handlePrint = () => {
@@ -104,10 +126,6 @@ const App: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      alert('请在打印弹窗中选择「存储为PDF」或「保存到文件」选项。');
-    }
     window.print();
   };
 
@@ -124,7 +142,6 @@ const App: React.FC = () => {
       const updatedLists = savedLists.map(l => l.id === editingListId ? newList : l);
       setSavedLists(updatedLists);
       localStorage.setItem('vocab_lists', JSON.stringify(updatedLists));
-      alert('保存成功！');
     } else {
       // New list - show modal to enter filename
       setSaveFilename(currentList.title);
@@ -267,7 +284,7 @@ const App: React.FC = () => {
                 type="text"
                 value={currentList.title}
                 onChange={(e) => setCurrentList(prev => ({ ...prev, title: e.target.value }))}
-                className="text-3xl font-bold text-center bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-indigo-500 focus:ring-0 w-full max-w-lg transition-all text-slate-900 placeholder-slate-300"
+                className="text-3xl font-bold text-center bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-indigo-400 focus:outline-none w-full max-w-lg transition-colors text-slate-900 placeholder-slate-300"
                 placeholder="List Title"
               />
               <p className="text-slate-500 mt-2 text-sm flex items-center justify-center gap-2">
@@ -457,13 +474,13 @@ const App: React.FC = () => {
                                   type="text"
                                   value={editingWord.english}
                                   onChange={(e) => setEditingWord(prev => ({ ...prev, english: e.target.value }))}
-                                  className="w-full px-2 py-1 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  className="w-full px-2 py-1 border border-slate-200 rounded focus:border-indigo-400 focus:outline-none transition-colors"
                                   autoFocus
                                 />
                               ) : (
                                 <span
                                   onClick={() => startEditWord(word)}
-                                  className="text-slate-900 font-medium cursor-pointer hover:text-indigo-600"
+                                  className="text-slate-900 font-medium cursor-text hover:bg-slate-100 px-1 -mx-1 rounded transition-colors"
                                 >
                                   {word.english}
                                 </span>
@@ -480,12 +497,12 @@ const App: React.FC = () => {
                                     if (e.key === 'Enter') saveEditWord();
                                     if (e.key === 'Escape') cancelEditWord();
                                   }}
-                                  className="w-full px-2 py-1 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 font-serif-sc"
+                                  className="w-full px-2 py-1 border border-slate-200 rounded focus:border-indigo-400 focus:outline-none transition-colors font-serif-sc"
                                 />
                               ) : (
                                 <span
                                   onClick={() => startEditWord(word)}
-                                  className="text-slate-600 font-serif-sc cursor-pointer hover:text-indigo-600"
+                                  className="text-slate-600 font-serif-sc cursor-text hover:bg-slate-100 px-1 -mx-1 rounded transition-colors"
                                 >
                                   {word.chinese}
                                 </span>
@@ -584,7 +601,7 @@ const App: React.FC = () => {
               value={saveFilename}
               onChange={(e) => setSaveFilename(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleConfirmSaveFromInput()}
-              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:border-indigo-400 focus:outline-none transition-colors"
               placeholder="输入文件名"
               autoFocus
             />
